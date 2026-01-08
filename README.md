@@ -38,6 +38,8 @@ A tab-separated text file consisting of:
 
 A tab-separated text file consisting of:
 
+  - `HatchlingNumber` character of unique hatchling identities within each year
+
 #### "incubationlengths_repository.txt" file
 
 A tab-separated text file consisting of:
