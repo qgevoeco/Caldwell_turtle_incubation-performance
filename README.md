@@ -1,6 +1,6 @@
 # Caldwell_turtle_incubation-performance
 
-[![DOI](https://zenodo.org/badge/18202871.svg)](https://doi.org/10.5281/zenodo.18202871)
+[![DOI](https://zenodo.org/badge/18202869.svg)](https://doi.org/10.5281/zenodo.18202869)
 
 Version controlled and editable source for the data and code supporting the paper
 __"Incubation and overwintering conditions influence righting performance of hatchling turtles"__ by _Molly Folkerts Caldwell, Daniel A. Warner, and Matthew E. Wolak_.
@@ -15,7 +15,7 @@ If you use these data, please cite the publication (preference)
 
 or data package 
 
->Wolak, M. E., Folkerts Caldwell, M., & Warner, D. A. (2026). qgevoeco/Caldwell_turtle_incubation-performance [Data set]. (Version v1). Zenodo. https://doi.org/10.5281/zenodo.18202871
+>Wolak, M. E., Folkerts Caldwell, M., & Warner, D. A. (2026). qgevoeco/Caldwell_turtle_incubation-performance [Data set]. (Version v1). Zenodo. https://doi.org/10.5281/zenodo.18202869
 
 ### Data metadata
 
