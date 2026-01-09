@@ -2,8 +2,6 @@
 
 [![DOI](https://zenodo.org/badge/18202869.svg)](https://doi.org/10.5281/zenodo.18202869)
 
-__README CURRENTLY UNDER CONSTRUCTION__
-
 Version controlled and editable source for the data and code supporting the paper
 __"Incubation and overwintering conditions influence righting performance of hatchling turtles"__ by _Molly Folkerts Caldwell, Daniel A. Warner, and Matthew E. Wolak_.
 
