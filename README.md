@@ -1,6 +1,6 @@
 # Caldwell_turtle_incubation-performance
 
-[![DOI](.svg)](https://zenodo.org/badge/latestdoi/)
+[![DOI](https://zenodo.org/badge/600135781.svg)](https://doi.org/10.5281/zenodo.7630636)
 
 __README CURRENTLY UNDER CONSTRUCTION__
 
