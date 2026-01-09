@@ -1,5 +1,4 @@
-### Righting trials analysis for both 2019 and 2020 hatchling trials - 2024 MS Prep
-##Use incubation temp as a continuous variable (IncTemp - center in R)
+### Righting trials analysis for both 2019 and 2020 hatchling trials
 
 rm(list = ls())
 
@@ -13,9 +12,11 @@ library(DHARMa)
 
 ###################################################
 #########LOAD data files##########
+# Saved as TAB delimited text files
 
 ###1 row per individual
-hatchlingdata1row <- read.table(file = "hatchling_data.txt", header = TRUE, sep = "\t")
+hatchlingdata1row <- read.table(file = "hatchling_data.txt",
+ header = TRUE, sep = "\t")
 
 hatchlingdata1row <- within(hatchlingdata1row,{
   Year <- as.factor(Year)
@@ -26,7 +27,8 @@ hatchlingdata1row <- within(hatchlingdata1row,{
 })
 
 ###3 rows per individual, with righting times
-RRdata3rows <- read.table(file = "hatchlingAndRightingResponse_data.txt", header = TRUE, sep = "\t")
+RRdata3rows <- read.table(file = "hatchlingAndRightingResponse_data.txt",
+  header = TRUE, sep = "\t")
 
 RRdata3rows <- within(RRdata3rows,{
   Year <- as.factor(Year)
@@ -38,7 +40,8 @@ RRdata3rows <- within(RRdata3rows,{
 })
 
 ###incubation lengths
-inclengths <- read.table(file = "incubationLengths_data.txt", header = TRUE, sep = "\t")
+inclengths <- read.table(file = "incubationLengths_data.txt",
+  header = TRUE, sep = "\t")
 
 inclengths <- within(inclengths,{
   Year <- as.factor(Year)
@@ -48,7 +51,8 @@ inclengths <- within(inclengths,{
 })
 
 ###egg survival
-eggsurvival <- read.table(file = "eggSurvival_data.txt", header = TRUE, sep = "\t")
+eggsurvival <- read.table(file = "eggSurvival_data.txt",
+  header = TRUE, sep = "\t")
 
 eggsurvival <- within(eggsurvival,{
   Year <- as.factor(Year)
@@ -135,11 +139,7 @@ hatchlingdata1row[ ,c("PC1growthD")]<-pca_growthD$x[ ,c("PC1")]
 
 
 
-
-
-
-
-
+##Use incubation temp as a continuous variable (IncTemp, centered in R)
 
 
 
@@ -148,7 +148,7 @@ hatchlingdata1row[ ,c("PC1growthD")]<-pca_growthD$x[ ,c("PC1")]
 ###EGG SURVIVAL
 
 ###center incubation temperature variable
-centeredIncTemp=scale(eggsurvival$IncTemp,center=TRUE,scale=FALSE)
+eggsurvival$centeredIncTemp=scale(eggsurvival$IncTemp,center=TRUE,scale=FALSE)
 
 eggsurv=glmer(EggSurvival~centeredIncTemp+Egg.Mass+(1|Clutch),data=eggsurvival,family=binomial)
 summary(eggsurv)
@@ -156,7 +156,7 @@ summary(eggsurv)
 ###INCUBATION LENGTH
 
 ###center Incubation Temperature variable 
-centeredIncTemp=scale(inclengths$IncTemp,center=TRUE,scale=FALSE)
+inclengths$centeredIncTemp=scale(inclengths$IncTemp,center=TRUE,scale=FALSE)
 
 incdur=glmer(IncLength~centeredIncTemp+ScaledDevMaxIncLength+(1|Clutch),data=inclengths,family=poisson(link ="log"))
 summary(incdur)
@@ -166,7 +166,7 @@ summary(incdur)
 ###effect of inc temp on egg incubation and post hatch measurements (TABLE 2)
 
 ###center Incubation Temperature variable 
-centeredIncTemp=scale(hatchlingdata1row$IncTemp,center=TRUE,scale=FALSE)
+hatchlingdata1row$centeredIncTemp=scale(hatchlingdata1row$IncTemp,center=TRUE,scale=FALSE)
 
 scl1=lmer(SCL1~centeredIncTemp+EggMass+ScaledDevMaxIncLength+(1|Clutch),data=hatchlingdata1row,na.action=na.omit)
 summary(scl1)
@@ -224,7 +224,7 @@ summary(growthDd)
 #####################################################################
 ###analyses using 3 row per individual righting response dataset
 
-centeredIncTemp3rows=RRdata3rows$IncTemp - 28#,center=TRUE,scale=FALSE)
+RRdata3rows$centeredIncTemp3rows=RRdata3rows$IncTemp - 28#,center=TRUE,scale=FALSE)
 
 
 ###stepwise models(including year)  
@@ -447,7 +447,18 @@ summary(activephen12)
 
 
 
-######################### Figures 2/25/2025 #############################
+
+
+
+
+
+
+
+
+######################### Figures  #############################################
+######################### Figures  #############################################
+######################### Figures  #############################################
+######################### Figures  #############################################
 
 tempvals = seq(from = -4, to = 4, length.out = 100)
 
@@ -555,10 +566,16 @@ head(Latency_regrid)
 
 plot(yvar ~ xvar, data = Latency_regrid)
 
-######adapted code from Nesting MS 
+
+
+
+
+
+#############################
+# Manuscript figures ########
+#############################
 
 ###things to define first for all plots
-
 xlab_in <- "Incubation Temperature (\u00B0C)"
 xaxis <- seq(from = -6, to = 6, by = 2)  #use centered values here, re-label further down
 # what should we set x-axis limits at
@@ -577,13 +594,15 @@ reglinewd <- 3.2  #<-- line width of all regression lines
 ptLwd <- 0.6  #<-- line width of point border
 
 
+
+
 #XXX for saving figures - use:
-pdf(file = "Fig1and2_8Trait_byIncubationAndOverwinter.pdf",
+pdf(file = "Fig1_6morphologicalTraits_byIncubationAndOverwinter.pdf",
     width = 9, height = 12)
 
 # use `par()` to set up some features of the entire figure
 ## `mfrow` designates the number of rows x columns to create in the figure
-par(mfrow = c(4, 2),  #<-- (rows, columns)
+par(mfrow = c(3, 2),  #<-- (rows, columns)
     mar = c(5, 6.2, 4.5, 0.5),  #<-- space around each panel (bottom, left, top, right)
     mgp = c(3, 1, 0), #<-- adjustment of axis title, labels, and line
     cex.axis = 1.2, cex.lab = 1.3)  #<-- scaling for axis labels and axis title
@@ -597,7 +616,7 @@ plot(yvar ~ xvar, data = emmipSCL2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Carapace length (mm)")
 
-# points first (to put in background)  ##where i put in orig data
+# points first (to put in background)
 ## Terrestrial first
 #points(SCL2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row, ##use this line to jitter
 points(SCL2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -611,10 +630,7 @@ points(SCL2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipSCL2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -651,7 +667,7 @@ mtext(text = expression((bold(A))),
 # LEGEND
 ################################
 legend(x = "topleft",
-       inset = c(-0.02, -0.3),  # tweak to shift above plotting area
+       inset = c(-0.02, -0.2),  # tweak to shift above plotting area
        xpd = NA,                 # allow drawing outside plot region
        legend = c("Terrestrial", "Aquatic"),
        pch = c(TerrPtSymb, AqSymb),
@@ -676,7 +692,7 @@ plot(yvar ~ xvar, data = emmipCW2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Carapace width (mm)")
 
-# points first (to put in background)  ##is this where i put in orig data?
+# points first (to put in background)
 ## Terrestrial first
 #points(CW2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row,
 points(CW2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -690,11 +706,7 @@ points(CW2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipCW2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -735,7 +747,7 @@ plot(yvar ~ xvar, data = emmipPL2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Plastron length (mm)")
 
-# points first (to put in background)  ##is this where i put in orig data?
+# points first (to put in background)
 ## Terrestrial first
 #points(PL2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row,
 points(PL2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -749,11 +761,7 @@ points(PL2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipPL2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -794,7 +802,7 @@ plot(yvar ~ xvar, data = emmipPW2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Plastron width (mm)")
 
-# points first (to put in background)  ##is this where i put in orig data?
+# points first (to put in background)
 ## Terrestrial first
 #points(PW2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row,
 points(PW2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -808,11 +816,7 @@ points(PW2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipPW2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -853,7 +857,7 @@ plot(yvar ~ xvar, data = emmipBD2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Body depth (mm)")
 
-# points first (to put in background)  ##where i put in orig data
+# points first (to put in background)
 ## Terrestrial first
 #points(BD2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row,
 points(BD2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -867,11 +871,7 @@ points(BD2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipBD2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -912,7 +912,7 @@ plot(yvar ~ xvar, data = emmipMass2, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Mass (g)")
 
-# points first (to put in background)  ##is this where i put in orig data?
+# points first (to put in background) 
 ## Terrestrial first
 #points(Mass2 ~ jitter(centeredIncTemp,jitfac), data = hatchlingdata1row,
 points(Mass2 ~ centeredIncTemp, data = hatchlingdata1row,
@@ -926,11 +926,7 @@ points(Mass2 ~ centeredIncTemp, data = hatchlingdata1row,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = emmipMass2, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -964,6 +960,28 @@ mtext(text = expression((bold(F))),
 
 
 
+dev.off()
+
+
+
+
+
+
+
+
+
+#XXX for saving figures - use:
+pdf(file = "Fig3_RightingResponses_byIncubationAndOverwinter.pdf",
+    width = 9, height = 4)
+
+# use `par()` to set up some features of the entire figure
+## `mfrow` designates the number of rows x columns to create in the figure
+par(mfrow = c(1, 2),  #<-- (rows, columns)
+    mar = c(5, 6.2, 4.5, 0.5),  #<-- space around each panel (bottom, left, top, right)
+    mgp = c(3, 1, 0), #<-- adjustment of axis title, labels, and line
+    cex.axis = 1.1, cex.lab = 1.2)  #<-- scaling for axis labels and axis title
+
+
 ################################
 # TOTAL RIGHTING RESPONSE TIME
 ################################
@@ -973,7 +991,7 @@ plot(yvar ~ xvar, data = RRtotal_regrid, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Righting response time (min)")
 
-# points first (to put in background)  ##where i put in orig data
+# points first (to put in background)
 ## Terrestrial first
 #points(RRTimeMin ~ jitter(centeredIncTemp3rows,jitfac), data = RRdata3rows,
 points(RRTimeMin ~ centeredIncTemp3rows, data = RRdata3rows,
@@ -987,11 +1005,7 @@ points(RRTimeMin ~ centeredIncTemp3rows, data = RRdata3rows,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = RRtotal_regrid, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -1021,14 +1035,14 @@ axis(1, xaxis,labels=seq(from = 22, to = 34, by = 2))
 axis(2, seq(-2, 24, 4))
 
 mtext(text = expression((bold(A))),
-      side = 3, line = 0.2, adj = -0.2, cex = 1.1)
+      side = 3, line = 0.9, adj = -0.2, cex = 1.1)
 
 ################################
 # LEGEND
 ################################
 
 legend(x = "topleft",
-       inset = c(-0.02, -0.3),  # tweak to shift above plotting area
+       inset = c(-0.02, -0.35),  # tweak to shift above plotting area
        xpd = NA,                 # allow drawing outside plot region
        legend = c("Terrestrial", "Aquatic"),
        pch = c(TerrPtSymb, AqSymb),
@@ -1054,7 +1068,7 @@ plot(yvar ~ xvar, data = Latency_regrid, type = "n", #<-- just set up
      xlab = xlab_in,
      ylab = "Latency to right (min)")
 
-# points first (to put in background)  ##is this where i put in orig data?
+# points first (to put in background) 
 ## Terrestrial first
 #points(LatencyMin ~ jitter(centeredIncTemp3rows,jitfac), data = RRdata3rows,
 points(LatencyMin ~ centeredIncTemp3rows, data = RRdata3rows,
@@ -1068,11 +1082,7 @@ points(LatencyMin ~ centeredIncTemp3rows, data = RRdata3rows,
        pch = AqSymb, bg = AqPtCols["bg"], col = AqPtCols["brd"],
        cex = AqCx, lwd = ptLwd)
 
-# Lines from model - ##don't need this part??
-## predict from the model
-#ndata$pred <- predict(modDistTW, #<-- XXX change for each response variable
-#newdata = ndata, level = 0)
-
+# Lines from model
 ## Terrestrial first
 lines(yvar ~ xvar, data = Latency_regrid, subset = tvar == "Terrestrial",
       lwd = reglinewd * 1.2, col = TerrPtCols["bg"])  #<-- make thicker so not covered
@@ -1102,14 +1112,13 @@ axis(1, xaxis,labels=seq(from = 22, to = 34, by = 2))
 axis(2, seq(-2, 24, 4))
 
 mtext(text = expression((bold(B))),
-      side = 3, line = 0.2, adj = -0.2, cex = 1.1)
+      side = 3, line = 0.9, adj = -0.2, cex = 1.1)
 
 
 
-###################
-dev.off() #<-- XXX MUST do this to close pdf file connection
+dev.off() 
 
-#END OF FIGURE#
+#END OF FIGUREs#
 #############################################################
 
 
@@ -1237,7 +1246,7 @@ testQuantiles(simulationOutput)
 
 
 
-###DHARMa plot fixes 2/6/2025
+###DHARMa plot fixes 
 
 ##########INCUBATION DURATION MODEL###################
 
@@ -1279,17 +1288,14 @@ rows_to_remove = c(41, 42, 46, 47)
 inclengths_no_outliers=inclengths[-rows_to_remove,]
 
 ###try again with new dataframe with rows removed
-###first need to create new centered inc temp variable with rows also removed
-centeredIncTempNO=scale(inclengths_no_outliers$IncTemp,center=TRUE,scale=FALSE)
-
-incdur=lmer(log(IncLength)~centeredIncTempNO+ScaledDevMaxIncLength+(1|Clutch),data=inclengths_no_outliers,na.action=na.omit)
+incdur=lmer(log(IncLength)~centeredIncTemp+ScaledDevMaxIncLength+(1|Clutch),data=inclengths_no_outliers,na.action=na.omit)
 summary(incdur)
 
 simulationOutput <- simulateResiduals(fittedModel = incdur)
 plot(simulationOutput)
 
 ###try again with glm, no outliers, 
-incdur=glmer(IncLength~centeredIncTempNO+ScaledDevMaxIncLength+(1|Clutch),data=inclengths_no_outliers,na.action=na.omit,family=poisson)
+incdur=glmer(IncLength~centeredIncTemp+ScaledDevMaxIncLength+(1|Clutch),data=inclengths_no_outliers,na.action=na.omit,family=poisson)
 summary(incdur)
 
 simulationOutput <- simulateResiduals(fittedModel = incdur)
