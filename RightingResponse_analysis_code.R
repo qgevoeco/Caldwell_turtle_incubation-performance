@@ -150,7 +150,7 @@ hatchlingdata1row[ ,c("PC1growthD")]<-pca_growthD$x[ ,c("PC1")]
 ###center incubation temperature variable
 eggsurvival$centeredIncTemp=scale(eggsurvival$IncTemp,center=TRUE,scale=FALSE)
 
-eggsurv=glmer(EggSurvival~centeredIncTemp+Egg.Mass+(1|Clutch),data=eggsurvival,family=binomial)
+eggsurv=glmer(EggSurvival~centeredIncTemp+EggMass+(1|Clutch),data=eggsurvival,family=binomial)
 summary(eggsurv)
 
 ###INCUBATION LENGTH

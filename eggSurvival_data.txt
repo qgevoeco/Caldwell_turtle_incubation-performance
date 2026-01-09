@@ -1,4 +1,4 @@
-Year	Clutch	EggSurvival	IncTemp	EggID	Egg.Mass
+Year	Clutch	EggSurvival	IncTemp	EggID	EggMass
 2019	1	1	32	1-1	11.9949
 2019	1	0	32	1-2	11.6082
 2019	1	1	24	1-3	11.7238
