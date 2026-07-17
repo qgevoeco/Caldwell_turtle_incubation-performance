@@ -11,7 +11,7 @@ __"Incubation and overwintering conditions influence righting performance of hat
 
 If you use these data, please cite the publication (preference)
 
->M. Folkerts Caldwell, D.A. Warner, and M.E. Wolak. _2026_. Incubation and overwintering conditions influence righting performance of hatchling turtles. _Journal of Experimental Zoology - Part A: Ecological and Integrative Physiology_ 345:337-350. [https://doi.org/](https://doi.org/10.1002/jez.70065).
+>M. Folkerts Caldwell, D.A. Warner, and M.E. Wolak. _2026_. Incubation and overwintering conditions influence righting performance of hatchling turtles. _Journal of Experimental Zoology - Part A: Ecological and Integrative Physiology_ 345:337-350. [https://doi.org/10.1002/jez.70065](https://doi.org/10.1002/jez.70065).
 
 or data package 
 
